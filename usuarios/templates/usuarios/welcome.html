@@ -1,0 +1,59 @@
+{% extends "./layout_welcome.html" %}
+{% load static %}
+<link rel"stylesheet" href = "{% static 'welcome.css' %}">
+{% block body %}
+
+    <!--<h1>Bienvenido a la Clínica Trinitas!</h1>
+    <a href="{% url 'login' %}">Iniciar sesión</a> -->
+
+    <main role="main" class="container">
+      <h1 class="mt-5"></h1>
+      <div style="background-image: url({% static 'imagen/header.jpg' %});">
+        <!-- image -->
+        </div>
+   <!-- page-header -->
+   <div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-caption">
+                    <h1 class="page-title">EXCELENCIA EN DERMATOLOGÍA CLÍNICA</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.page-header-->
+      
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"></use></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">EXPERIENCIA Y TECNOLOGÍA</h3>
+          <p>Contamos con una gran experiencia y tecnología de punta para realizar tratamientos sencillos y complejos.</p>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"></use></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">EQUIPO MÉDICO</h3>
+          <p>Contamos con un excelente equipo médico que le dará consejos sobre cuál es el mejor tratamiento para elegir</p>
+        </div>
+        <div class="feature col">
+          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+          </div>
+          <h3 class="fs-2 text-body-emphasis">ATENCIÓN INTEGRAL</h3>
+          <p>Ofrecemos procedimientos dermatológicos clínicos y quirúrgicos completos que incluyen todo tipo de tratamientos.</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="d-flex flex-column sticky-footer-wrapper">
+        <span class="text-muted"><i class="far fa-copyright"></i> Centro Dermatológivo Derma 2023<span id="span-derechos-reservados"> - SG MÉDICA </span></span>
+      </div>
+    </footer>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "./layout.html" %}
+{% load static %}
+
+   
+{% block body %}
+
+<h1>Turnos de hoy</h1>
+<h2 id="today" class="mb-4"></h2>
+<form action="{% url 'turnos_hoy' %}" method="POST" >
+{% csrf_token %}
+<table class="table" id="tbl">
+    <thead>
+        <tr> 
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Horario</th>
+            <th scope="col">Profesional Medico</th>
+            <th scope="col">Asistencia</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for turno in turnos_hoy %}
+            <tr class="row_body">
+                <th scope="row" class="num"></th>
+                <td>{{turno.paciente.nombre}}</td>
+                <td>{{turno.paciente.apellido}}</td>
+                <td>{{turno.horario}}</td>
+                <td>{{turno.medico.last_name}}, {{turno.medico.first_name}}.</td>
+                <td><select class="form-control col-md-auto" name="asist-{{turno.id}}">
+                        <option class="no" value="NO">NO</option>
+                        <option class="si" value="SI">SI</option>
+                    </select>
+                    <input type="hidden" class="id-turno" value="{{turno.id}}"/>
+                    
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+<!-- <input type="submit" class="submit btn btn-primary mt-2 mb-2" value="Guardar cambios" onclick="guardar_cambios()">Guardar Cambios</input> -->
+<button id="boton-guardar-cambios" type="submit" class="submit btn btn-primary mt-2 mb-2" value="Guardar cambios" onclick="guardar_cambios()"><i class="fal fa-calendar-edit"></i> Guardar Cambios</button>
+
+<div id="div-cero-turnos" class="alert alert-warning col-md-6 col-sm-8" role="alert" style="display:none;">
+  <i class="fal fa-exclamation-triangle"></i><span id="cero-turnos"></span>
+</div>
+
+
+</form>
+<br>
+
+<a href="{% url 'index' %}">Volver atrás</a>
+
+<script type="text/javascript">
+var turnos_hoy = JSON.parse('{{turnos_serializados | safe}}');
+console.log(turnos_hoy)
+var tbl = document.getElementById("tbl").tBodies[0];
+
+function sortTable(){
+    var store = [];
+    for(var i=0, len=tbl.rows.length; i<len; i++){
+        var row = tbl.rows[i];
+        var sortnr = parseFloat(row.cells[3].textContent || row.cells[3].innerText);
+        if(!isNaN(sortnr)) store.push([sortnr, row]);
+    }
+    store.sort(function(x,y){
+        return x[0] - y[0];
+    });
+    for(var i=0, len=store.length; i<len; i++){
+        tbl.appendChild(store[i][1]);
+    }
+    store = null;
+    //console.log("Tabla ordenada")
+}
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+        console.log(tbl)
+        var tbody = document.querySelector('tbody');
+        var trs = tbody.getElementsByTagName('tr');
+        var x = 0;
+        for (tr of trs){
+            var select = tr.querySelector("select");
+            //console.log(select);
+            var turno = turnos_hoy[x];
+            x++;
+            //console.log(turno);
+            //console.log(turno["fields"]["asistencia"]);
+            if (turno["fields"]["asistencia"]){
+                if (turno["fields"]["asistencia"]=== "SI"){
+                    select.querySelector('.si').selected = 'selected';
+                }else{
+                    select.querySelector('.no').selected = 'selected';
+                }
+            }
+        }
+        sortTable();
+        console.log(tbl)
+        if(turnos_hoy.length == 0)
+        {
+            document.getElementById("boton-guardar-cambios").style.display = "none";
+            document.getElementById("div-cero-turnos").style.display = "block";
+            document.getElementById("cero-turnos").innerHTML = " No hay turnos para el día de hoy";
+        }
+    })
+    
+    
+function guardar_cambios(){
+    location.reload();
+        
+}
+</script>
+
+<script type="text/javascript" src="{%  static 'usuarios/turnos_hoy.js' %}"></script>
+
+
+{% endblock %}
