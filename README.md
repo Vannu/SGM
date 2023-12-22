@@ -38,7 +38,7 @@ pip install Django
 
 6. **Instalar "mathfilter"**: Después de instalar Django, instala la libreria "mathfilter":
 ```
-pip install mathfilter
+pip install django-mathfilters
 ```
 
 7. **Acceder al directorio del proyecto**: Ve al directorio de tu proyecto existente.
